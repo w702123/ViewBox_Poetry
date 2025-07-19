@@ -1,10 +1,14 @@
 # ViewBox_Poetry
+
 Rain on the Window - Interactive Poetry Experience
+
 Description:
- A poetic interpretation of rainfall using SVG viewBox and glass-morphism effects.
-An artistic take on rain using simple animations and glassy effects. This interactive piece brings a poem to life with rain patterns and a minimalist design, focusing on feelings of reflection.
+A poetic interpretation of rainfall using SVG viewBox and glass-morphism effects.
+An artistic take on rain using simple animations and glassy effects. 
+This interactive piece brings a poem to life with rain patterns and a minimalist design, focusing on feelings of reflection.
 
 Features:
+
 Hover Animations:
 	•	Line 1: Gently bounces.
 	•	Line 2: Moves up and down.
