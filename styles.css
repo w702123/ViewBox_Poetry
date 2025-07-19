@@ -1,0 +1,886 @@
+/* Glass Container
+ * Creates a frosted glass effect with backdrop-filter.
+ * Reference: https://ui.glass/generator/
+ */
+.glass-container {
+    position: relative;
+    width: min(600px, 80vw);
+    height: min(600px, 80vw);
+    aspect-ratio: 1/1;
+    
+    background: rgba(255, 255, 255, 0.12);  /* Semi-transparent white background */
+    
+    /* Apply glass morphism using backdrop filter */
+    /* Reference: 
+    https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter 
+     https://www.w3schools.com/cssref/css3_pr_backdrop-filter.php 
+     */
+    -webkit-backdrop-filter: 
+        blur(50px)
+        saturate(180%)
+        brightness(105%)
+        contrast(1.1);
+    backdrop-filter: 
+        blur(50px)         
+        saturate(180%)
+        brightness(105%)
+        contrast(1.1);
+        
+   
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 0 30px 10px rgba(0, 0, 0, 0.3),        /* Outer shadow */
+        inset 0 0 3px rgba(255, 255, 255, 0.2); /* Inner shadow */
+    overflow: hidden;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+/* Responsive Adjustments
+ * Adapt layout for smaller screens
+ * Reference: https://web.dev/responsive-web-design-basics/
+ */
+@media (max-width: 768px) {
+    .glass-container {
+        width: 90vw;
+    }
+}
+
+
+/* Gradient Background */
+/* Add a dynamic animated gradient */
+/* Reference: https://cssgradient.io  https://www.w3schools.com/css/css3_gradients.asp */
+.gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(
+        -45deg, /* Sets the gradient angle */
+        #000000 0%,    /* Black */
+        #2c3e50 40%,   /* Dark blue */
+        #404262 60%,   /* Greyish blue */
+        #000000 100%   /* Black again */
+    );
+    background-size: 300% 300%;  /* Expand gradient */
+    animation: gradientBG 20s ease-in-out infinite alternate; /* Smooth looping animation */
+}
+
+/* Background Rain Pattern */
+.background-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;  /* Place it above gradient-bg but below other elements */
+    pointer-events: none;  /* Allow clicks to pass through */
+    opacity: 0.4;  /* Make the pattern subtle */
+}
+
+/* Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 0%;  /* Starts the gradient at the top-left */
+    }
+    50% {
+        background-position: 100% 100%; /* Moves the gradient to the bottom-right */
+    }
+    100% {
+        background-position: 0% 0%; /* Returns the gradient to the top-left */
+    }
+}
+
+/* Cloud Animations */
+/* Add floating animated clouds with position and movement */
+/* Reference: https://codepen.io/fershocastro/pen/dVBgxQ */
+
+.clouds-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Cloud Shape and Styling */
+/* Create semi-realistic clouds with overlapping circles */
+/* Reference: https://lauryndbrown.github.io/2017/06/08/creating-clouds-in-css.html */
+.cloud { 
+    position: absolute;
+    width: 180px;  
+    height: 60px;  
+    background: #ECEFF1;
+    border-radius: 30px;
+    box-shadow: 10px 10px rgba(0,0,0,0.1);
+}
+
+
+.cloud::before {
+    content: "";  /* Adds an empty content before the cloud */
+    position: absolute;
+    width: 100px;  
+    height: 100px;
+    background: inherit;
+    border-radius: 50%;
+    top: -50px;
+    right: 30px;
+}
+
+.cloud::after {
+    content: "";
+    position: absolute;
+    width: 80px;  
+    height: 80px;
+    background: inherit;
+    border-radius: 50%;
+    top: -35px;
+    left: 30px;
+}
+
+/* Floating Cloud Animations */
+/* Apply different speeds and delays to clouds */
+.cloud1 { 
+    top: 10%; 
+    animation: floatCloud 38s linear infinite;
+}
+.cloud2 { 
+    top: 30%; 
+    animation: floatCloud 45s linear infinite;
+    animation-delay: -25s;
+}
+.cloud3 { 
+    top: 50%; 
+    animation: floatCloud 42s linear infinite;
+    animation-delay: -15s;
+}
+.cloud4 { 
+    top: 70%; 
+    animation: floatCloud 35s linear infinite;
+    animation-delay: -30s;
+}
+.cloud5 { 
+    top: 90%; 
+    animation: floatCloud 40s linear infinite;
+    animation-delay: -8s;
+}
+
+@keyframes floatCloud {
+    0% {
+        transform: translateX(-200px); /* Starts the cloud off-screen to the left */
+    }
+    100% {
+        transform: translateX(calc(100vw + 200px));  /* Moves the cloud off-screen to the right */
+    }
+}
+
+/* Modal Styles */
+/* Define the styles for the Design System modal */
+.poetry-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.rain-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows interaction with underlying content */
+}
+
+/* Styles for the animated raindrop lines. */
+.raindrops line {
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 1;
+}
+
+/* Text styling for the poem lines. */
+.poem-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    fill: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+}
+
+.poem-line {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 32px);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Poem text animation*/
+
+/* Adds a bounce effect on hover for rain-themed text (First line). */
+
+.poem-line[data-theme="rain"]:hover {
+    animation: rainBounce 0.5s ease-in-out infinite;
+} 
+ 
+/* Tears theme splits words into floating pieces with alternating motion (Second Line). */
+.poem-line[data-theme="tears"] {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.poem-line[data-theme="tears"] .word {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Animation for odd-indexed words (upward floating). */
+.poem-line[data-theme="tears"]:hover .word:nth-child(odd) {
+    animation: floatUpThenDown 3s ease-in-out infinite; /* Up-and-down motion */
+}
+
+.poem-line[data-theme="tears"]:hover .word:nth-child(even) {
+    animation: floatDownThenUp 3s ease-in-out infinite;  /* down-and-up motion */
+}
+
+/* Lonely hover Effects (Third Line)*/
+.poem-line[data-theme="lonely"]:hover {
+    animation: gentleStretch 2s cubic-bezier(0.4, 0, 0.2, 1); /* stretch and shrink motion */
+}
+
+
+@keyframes rainBounce { /* Reference:   https://codepen.io/annakaz/pen/GNRxQj  https://codepen.io/MarioDesigns/pen/woJgeo */
+    0%, 100% { transform: translateY(0); } /* start and end at the same position */
+    50% { transform: translateY(3px); } /* bounce up */
+ }
+
+
+/* Reference: https://www.geeksforgeeks.org/css-floating-animation */ 
+@keyframes floatUpThenDown {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-12px); }
+    75% { transform: translateY(8px); }
+}
+
+@keyframes floatDownThenUp {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(8px); }
+    75% { transform: translateY(-12px); }
+}
+
+/* Reference:
+
+https://codepen.io/danieledesantis/pen/WNXvQOb
+https://codepen.io/Havatar/pen/wvjQwK 
+
+*/
+
+@keyframes gentleStretch {
+    0% { 
+        letter-spacing: normal;
+        transform: scale(1);
+    }
+    40% { 
+        letter-spacing: 8px;
+        transform: scale(1.03);
+    }
+    80% { 
+        letter-spacing: 4px;
+        transform: scale(1.01);
+    }
+    100% { 
+        letter-spacing: normal;
+        transform: scale(1);
+    }
+}
+
+/* Globe fade animation */
+@keyframes globalFade {
+    0% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Text styling for the poem lines. */
+.poem-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ---------------------------------
+   Buttons and Hover Effects
+   Reference: https://m3.material.io/components/buttons
+---------------------------------- */
+.toggle-button.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.toggle-button.after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease-out;
+}
+
+.toggle-button:active::after {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+}
+
+/* Design System Modal */
+.design-modal {
+    background: rgba(28, 28, 28, 0.95); /* Dark semi-transparent background */
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+    width: 90vw;
+    max-height: 90vh;
+    padding: 0;
+}
+
+.modal-content {
+    padding: 2.5rem;
+}
+
+/* Header Section with Design System title */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);  
+    margin-bottom: 3.5rem;
+}
+
+
+.design-section {
+    margin-bottom: 3.5rem;
+}
+
+/* Colors Section */
+.design-section.colors {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);  
+}
+
+/* Typography Section */
+.design-section.typography {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+
+.design-section.layout {
+    margin-bottom: 0;
+}
+
+/* Section Headers */
+.design-section h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;  
+    padding-left: 0; 
+    text-align: left;
+}
+
+/* Section Content */
+.color-grid,
+.type-samples,
+.layout-samples {
+    margin-bottom: 1.75rem; 
+    padding-left: 0;  
+    margin-top: 1rem;
+}
+
+/* Colors Section */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+}
+
+/* Background Color Preview in Design System Modal */
+.color-preview.bg-gradient {
+    background: linear-gradient(
+        -45deg, /* Sets the gradient angle */
+        #000000 0%,    /* Black */
+        #2c3e50 40%,   /* Dark blue */
+        #404262 60%,   /* Greyish blue */
+        #000000 100%   /* Black again */
+    );
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Glass Effect Preview in Design System Modal */
+.color-preview.glass-effect {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(50px);
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    padding-bottom: 1rem;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.color-preview {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+
+
+.text-colors {
+    background: #2c3e50;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-colors span {
+    display: block;
+    margin: 0.75rem 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+
+.text-color {
+    background: rgba(255, 255, 255, 0.9);  
+}
+
+/* Typography Section */
+.type-samples {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.type-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.2rem;
+}
+
+.type-preview {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Font styles with shared color */
+.font-playfair {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.ui-text-sm {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Create shared text styles */
+.text-white {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+.type-info {
+    padding: 0.75rem 0;
+}
+
+.type-info span {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.type-info code {
+    display: block;
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+/* Layout Section */
+.layout-samples {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.layout-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.layout-preview {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Container Preview */
+.container-preview {
+    width: 120px;
+    aspect-ratio: 1/1;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Cloud Preview */
+.cloud-preview {
+    width: 180px;
+    height: 60px;
+    background: #ECEFF1;
+    border-radius: 30px;
+    position: relative;
+    margin-top: 30px;
+}
+
+.cloud-preview::before,
+.cloud-preview::after {
+    content: '';
+    position: absolute;
+    background: #ECEFF1;
+}
+
+.cloud-preview::before {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    top: -50px;
+    left: 15px;
+}
+
+.cloud-preview::after {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    top: -60px;
+    right: 15px;
+}
+
+/* Controls Container Preview */
+.controls-preview {
+    width: 180px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 100px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-preview {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.button-preview {
+    width: 80px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    margin-left: auto;
+}
+
+.layout-info {
+    padding: 0.5rem 0;
+}
+
+.layout-info span {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.layout-info code {
+    display: block;
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+/* Info Styles */
+.color-info,
+.type-info,
+.layout-info {
+    padding: 1rem;
+}
+
+.color-info span,
+.type-info span,
+.layout-info span {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.color-info code,
+.type-info code,
+.layout-info code {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+.controls-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 3;
+    padding: 16px;
+    
+  
+    background: rgba(255, 255, 255, 0.12);
+    
+    
+    -webkit-backdrop-filter: 
+        blur(50px)
+        saturate(180%)
+        brightness(105%)
+        contrast(1.1);
+    backdrop-filter: 
+        blur(50px)
+        saturate(180%)
+        brightness(105%)
+        contrast(1.1);
+        
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 0 30px 10px rgba(0, 0, 0, 0.3),
+        inset 0 0 3px rgba(255, 255, 255, 0.2);
+    margin-top: -60px;
+}
+
+
+.audio-controls {
+    display: flex;
+    gap: 16px;  
+}
+
+
+.toggle-button {
+    width: 48px; 
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-button:active {
+    transform: translateY(0);
+}
+
+.toggle-button.active {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button .icon {
+    font-size: 24px;  
+    position: relative;
+    z-index: 2;
+}
+
+
+.design-button {
+    height: 48px;  
+    padding: 0 24px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 100px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.design-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.design-button:active {
+    transform: translateY(0);
+}
+
+
+.glass-container {
+    padding-bottom: 100px; 
+
+
+/* Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.controls-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.button-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+
+/* Typography Scale */
+.typography-scale {
+    display: grid;
+    gap: 1rem;
+}
+
+.type-sample {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+}
+
+/* Layout Components */
+.layout-preview {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+}
+
+.layout-box {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+/* Animation Utilities */
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.scale-in {
+    animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    .poem-line {
+        font-size: clamp(20px, 3.5vw, 28px); 
+    }
+}
+}

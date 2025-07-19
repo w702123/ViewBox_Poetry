@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+Overview:
+1. Background Layer
+   - Gradient background
+   - Cloud animations
+
+2. Main Content Layer
+   - Glass container
+   - Poetry content
+   - Rain animation
+
+3. Control Layer
+   - Audio controls
+   - Design system button
+
+4. Modal Layer
+   - Design system documentation
+   - Color system
+   - Typography
+   - Layout patterns  -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain on the Window - ViewBox Poetry</title>
+    
+    <!-- Typography: Playfair for poetry, Roboto for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Background Layer -->
+    <div class="gradient-bg"></div>
+    
+    <!-- Add Background Rain Pattern -->
+    <svg class="background-pattern" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <pattern id="rain-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                <!-- Vertical rain lines -->
+                <line x1="25" y1="0" x2="20" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                <line x1="45" y1="0" x2="40" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                <line x1="5" y1="0" x2="0" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#rain-pattern)"/>
+    </svg>
+
+    <!-- Cloud Animation Layer -->
+    <div class="clouds-container">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+        <div class="cloud cloud5"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="poetry-container">
+        <!-- Glass Container with Rain Effect -->
+        <div class="glass-container">
+            <svg class="rain-canvas" viewBox="0 0 800 600">
+                <g class="raindrops"></g>
+            </svg>
+            
+            <!-- Poetry Content -->
+            <div class="poem-container">
+                <div class="poem-line" data-theme="rain">Rain on the Window,</div>
+                <div class="poem-line" data-theme="tears">Tracing paths like tears that fall,</div>
+                <div class="poem-line" data-theme="lonely">Loneliness inside.</div>
+
+                 <!-- https://www.w3schools.com/tags/att_data-.asp -->
+                 <!--https://stackoverflow.com/questions/77494641/use-data-theme-variable-value-in-css -->
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="controls-container">
+            <div class="audio-controls">
+                <button class="toggle-button" id="rainToggle">
+                    <span class="icon">🌧️</span>
+                </button>
+                <button class="toggle-button" id="thunderToggle">
+                    <span class="icon">⚡</span>
+                </button>
+            </div>
+            <button class="design-button">Design System</button>
+        </div>
+    </main>
+
+    <!-- Design System Modal -->
+    <!-- A modal for displaying the design system including colors, typography, and layout. -->
+  
+
+    <dialog class="design-modal" aria-labelledby="modal-title" role="dialog">
+          <!-- Reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog -->
+           <!-- Reference: https://sahil2004.medium.com/dialogs-cf832e2f583c -->
+           
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Design System</h2>
+                <button class="close-button" aria-label="Close modal">✕</button>
+            </header>
+
+            <!-- Colors Section -->
+            <section class="design-section colors">
+                <h3>Colors</h3>
+                <div class="color-grid">
+                    <!-- Background Color Preview -->
+
+                    <!-- Reference:https://www.w3schools.com/howto/howto_css_modals.asp -->
+
+                    <div class="color-item">
+                        <div class="color-preview bg-gradient"></div>
+                        <div class="color-info">
+                            <span>Background</span>   <!-- https://www.basedash.com/blog/how-to-create-a-toggle-button-in-javascript -->
+                            <code>Linear Gradient:</code>
+                            <code>#000000 → #2c3e50 → #404262</code>
+                        </div>
+                    </div>
+                    <!-- Glass Effect Preview -->
+                    <div class="color-item">
+                        <div class="color-preview glass-effect"></div>
+                        <div class="color-info">
+                            <span>Glass Effect</span>
+                            <code>Background: rgba(255, 255, 255, 0.12)</code>
+                            <code>Backdrop-filter: blur(50px)</code>
+                        </div>
+                    </div>
+                    <!-- Cloud Color Preview -->
+                    <div class="color-item">
+                        <div class="color-preview" style="background-color: #ECEFF1;"></div>
+                        <div class="color-info">
+                            <span>Cloud Color</span>
+                            <code>#ECEFF1</code>
+                        </div>
+                    </div>
+                    <!-- Text Colors Preview -->
+                    <div class="color-item">
+                        <div class="color-preview text-colors">
+                            <span>Text</span>
+                        </div>
+                        <div class="color-info">
+                            <span>Text Colors</span>
+                            <code>rgba(255, 255, 255, 0.9)</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Typography Section -->
+            <section class="design-section typography">
+                <h3>Typography</h3>
+                <div class="type-samples">
+                    <div class="type-item">
+                        <div class="type-preview">
+                            <span class="font-playfair">Playfair Display</span>
+                        </div>
+                        <div class="type-info">
+                            <span>Poetry Text</span>
+                            <code>Font: Playfair Display</code>
+                            <code>Size: 32px</code>
+                            <code>Weight: Regular</code>
+                        </div>
+                    </div>
+                    <div class="type-item">
+                        <div class="type-preview">
+                            <span class="font-roboto">Roboto</span>
+                        </div>
+                        <div class="type-info">
+                            <span>Button & Label Text</span>
+                            <code>Font: Roboto</code>
+                            <code>Size: 14px</code>
+                            <code>Weight: Regular</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Layout Section -->
+            <section class="design-section layout">
+                <h3>Layout</h3>
+                <div class="layout-samples">
+                    <!-- Main Container -->
+                    <div class="layout-item">
+                        <div class="layout-preview">
+                            <div class="container-preview"></div>
+                        </div>
+                        <div class="layout-info">
+                            <span>Main Container</span>
+                            <code>Width: min(600px, 80vw)</code>
+                            <code>Aspect Ratio: 1:1</code>
+                            <code>Glass Effect Applied</code>
+                        </div>
+                    </div>
+
+                    <!-- Cloud Layout -->
+                    <div class="layout-item">
+                        <div class="layout-preview">
+                            <div class="cloud-container-preview">
+                                <div class="cloud-preview"></div>
+                            </div>
+                        </div>
+                        <div class="layout-info">
+                            <span>Clouds</span>
+                            <code>Position: Fixed</code>
+                            <code>Width: 180px</code>
+                            <code>Animation: Float 35-45s</code>
+                        </div>
+                    </div>
+
+                    <!-- Controls Container -->
+                    <div class="layout-item">
+                        <div class="layout-preview">
+                            <div class="controls-preview">
+                                <div class="toggle-preview"></div>
+                                <div class="button-preview"></div>
+                            </div>
+                        </div>
+                        <div class="layout-info">
+                            <span>Controls Container</span>
+                            <code>Glass Effect Applied</code>
+                            <code>Border Radius: 100px</code>
+                            <code>Padding: 16px</code>
+                            <code>Button Size: 48px × 48px</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </dialog>
+
+    <!-- Audio Resources -->
+    <!-- Rain and thunder audio effects with looping enabled. -->
+    <!-- Reference: https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement -->
+
+    <audio id="rainSound" preload="auto" loop>
+        <source src="./assets/rain.mp3" type="audio/mp3">
+    </audio>
+    <audio id="thunderSound" preload="auto">
+        <source src="./assets/thunder.mp3" type="audio/mp3">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
